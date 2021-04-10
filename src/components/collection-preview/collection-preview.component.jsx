@@ -15,7 +15,7 @@ const CollectionPreview = ({ title, items }) => (
                         <CollectionItem key={id}  {...otheritemprops} />
 
                     ))}
-            </div>
+            </div> 
         </div>
 
 )
