@@ -8,7 +8,7 @@ import ShopPage from './pages/shop/shop.component.jsx'
 import Header from './components/header/header.component';
 
 import SignInAndSignUpPage from './pages/signinandsignuppage/signinandsignuppage.component';
-import { auth } from './firebase/firebase.utils';
+import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 import { canConstructResponseFromBodyStream } from 'workbox-core/_private';
 
 
@@ -34,11 +34,32 @@ class App extends React.Component {
 
     componentDidMount() {
 
-      this.unsubscribeFromAuth =   auth.onAuthStateChanged( user => {
+      this.unsubscribeFromAuth =   auth.onAuthStateChanged( async userAuth => {
 
-          this.setState( {currentUser : user})
+        if(userAuth){
 
-          console.log(user);
+          const userRef = await createUserProfileDocument(userAuth);
+
+          userRef.onSnapshot(snapshot => {
+
+            this.setState(
+              {
+
+              currentUser: {
+
+                  id: snapshot.id,
+                  ...snapshot.data()
+
+             }
+
+            })
+
+            console.log(this.state);
+
+          });
+
+          this.setState(this.currentUser = userAuth);
+        }
 
         });
 
