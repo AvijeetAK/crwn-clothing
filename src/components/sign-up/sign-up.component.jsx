@@ -11,7 +11,7 @@ import FormInput from '../form-input/form-input.component';
 
 class SignUp  extends React.Component {
 
-
+ 
         constructor() {
             super();
 
